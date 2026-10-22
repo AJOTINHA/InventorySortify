@@ -42,3 +42,5 @@ repo/
 ### Inventory Sortify ###
 # Machine-specific settings (Prism mods folder).
 local.properties
+# Logo sources and other local outputs (the mod uses src/main/resources/logo.png and icon.png).
+outputs/
