@@ -1,0 +1,99 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+    id 'idea'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+// Mojang ships Java 25 to end users in 26.3, so mods should target Java 25.
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+        }
+
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+// Expands the gradle.properties values into neoforge.mods.toml.
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('jar', Jar) {
+    from('LICENSE')
+}
+
+// After every `build`, replace the mod jar in the local Prism Launcher instance: sortify_prism_mods_dir in the
+// git-ignored local.properties.
+var localProperties = new Properties()
+var localPropertiesFile = file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { localProperties.load(it) }
+}
+var prismModsDir = localProperties.getProperty('sortify_prism_mods_dir')
+if (prismModsDir != null) {
+    var modsDir = file(prismModsDir)
+    var removeOldPrismJars = tasks.register('removeOldPrismJars', Delete) {
+        delete fileTree(modsDir) { include "${mod_id}-*.jar" }
+    }
+    var copyToPrism = tasks.register('copyToPrism', Copy) {
+        dependsOn removeOldPrismJars
+        from tasks.named('jar')
+        into modsDir
+    }
+    tasks.named('build') { finalizedBy copyToPrism }
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

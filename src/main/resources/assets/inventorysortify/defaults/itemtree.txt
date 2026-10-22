@@ -1,0 +1,115 @@
+# Inventory Sortify - item tree
+#
+# Every line is a keyword you can use in rules.txt, followed by what it matches:
+#   #namespace:tag   an item tag (works for modded items too, e.g. #c:ingots)
+#   namespace:item   an item id ("minecraft:" can be left out)
+#   @block @food @damageable @tool @weapon @equippable @potion @enchanted_book @spawn_egg @unstackable
+# Indentation nests keywords: a keyword also matches everything nested under it, and the top keyword ("stuff")
+# matches every item. Items are sorted in the order of the first line that matches them (a line with a more
+# specific match nested under it is skipped), then by their registry order. Items no line matches go last.
+#
+# Changes are picked up the next time you sort. Delete this file to get the default back.
+
+stuff
+  equipment
+    weapon
+      sword          #minecraft:swords
+      spear          #minecraft:spears
+      mace           #c:tools/mace
+      trident        #c:tools/trident
+      shield         #c:tools/shield
+      ranged
+        bow          #c:tools/bow
+        crossbow     #c:tools/crossbow
+        arrow        #minecraft:arrows
+        throwable    snowball egg blue_egg brown_egg wind_charge
+      otherWeapon    @weapon
+    tool
+      pickaxe        #minecraft:pickaxes
+      axe            #minecraft:axes
+      shovel         #minecraft:shovels
+      hoe            #minecraft:hoes
+      shears         #c:tools/shear
+      fishingRod     #c:tools/fishing_rod
+      flintAndSteel  #c:tools/igniter
+      brush          #c:tools/brush
+      onAStick       carrot_on_a_stick warped_fungus_on_a_stick
+      otherTool      #c:tools @tool
+    armor
+      helmet         #minecraft:head_armor
+      chestplate     #minecraft:chest_armor
+      elytra         elytra
+      leggings       #minecraft:leg_armor
+      boots          #minecraft:foot_armor
+      animalArmor    #c:armors/horse #c:armors/wolf #c:armors/nautilus
+      otherArmor     #c:armors
+    otherEquipment   @equippable @damageable
+  utility
+    torch            torch soul_torch redstone_torch copper_torch
+    lightSource      #minecraft:lanterns lantern soul_lantern copper_lantern end_rod glowstone sea_lantern shroomlight #c:froglights #minecraft:candles
+    bucket           #c:buckets
+    container        #c:chests #c:barrels #c:shulker_boxes #minecraft:bundles ender_chest
+    workstation      #c:villager_job_sites crafting_table furnace anvil chipped_anvil damaged_anvil enchanting_table beacon
+    bed              #minecraft:beds
+    navigation       #minecraft:compasses clock map filled_map recovery_compass spyglass
+    vehicle          #minecraft:boats #minecraft:chest_boats minecart chest_minecart furnace_minecart hopper_minecart tnt_minecart saddle #minecraft:harnesses
+    utilityItem      ender_pearl ender_eye name_tag lead totem_of_undying firework_rocket experience_bottle book writable_book written_book
+    enchantedBook    @enchanted_book
+  food
+    cookedFood       #c:foods/cooked_meat #c:foods/cooked_fish bread baked_potato pumpkin_pie cookie cake #c:foods/soup
+    goldenFood       #c:foods/golden
+    fruitAndVeg      #c:foods/fruit #c:foods/vegetable #c:foods/berry
+    rawFood          #c:foods/raw_meat #c:foods/raw_fish
+    badFood          #c:foods/food_poisoning
+    otherFood        @food
+  potion
+    drinkablePotion  potion
+    splashPotion     splash_potion
+    lingeringPotion  lingering_potion
+    otherPotion      @potion
+    potionIngredient #minecraft:brewing_potion_inputs glass_bottle
+  resources
+    ore              #c:ores #c:raw_materials
+    ingot            #c:ingots
+    gem              #c:gems
+    nugget           #c:nuggets
+    dust             #c:dusts
+    coal             #minecraft:coals
+    storageBlock     #c:storage_blocks
+    mobDrop          #c:bones #c:strings #c:leathers #c:feathers #c:gunpowders #c:slime_balls #c:ender_pearls #c:rods spider_eye rotten_flesh ghast_tear phantom_membrane shulker_shell armadillo_scute turtle_scute blaze_powder magma_cream nether_star
+    dye              #c:dyes
+    farming
+      seed           #c:seeds
+      crop           #c:crops
+      sapling        #minecraft:saplings
+      flower         #minecraft:flowers #c:flowers
+      mushroom       #c:mushrooms
+      plant          #minecraft:leaves vine glow_lichen lily_pad sugar_cane cactus bamboo kelp seagrass moss_carpet
+    material         stick paper clay_ball brick nether_brick flint #minecraft:trim_materials #minecraft:decorated_pot_sherds
+  blocks
+    wood
+      log            #minecraft:logs #c:natural_logs #c:stripped_logs #c:natural_woods #c:stripped_woods
+      plank          #minecraft:planks
+      woodenStairs   #minecraft:wooden_stairs
+      woodenSlab     #minecraft:wooden_slabs
+      woodenFence    #minecraft:wooden_fences #minecraft:fence_gates
+      woodenDoor     #minecraft:wooden_doors #minecraft:wooden_trapdoors
+    stone            #c:stones #c:cobblestones #minecraft:stone_bricks #c:end_stones #c:netherracks #c:obsidians #minecraft:stone_crafting_materials
+    dirt             #minecraft:dirt #c:gravels #c:sands #minecraft:sand #minecraft:mud
+    glass            #c:glass_blocks #c:glass_panes
+    wool             #minecraft:wool #minecraft:wool_carpets
+    clay             #minecraft:terracotta #c:glazed_terracottas #c:concretes #minecraft:concrete #c:concrete_powders #minecraft:concrete_powders
+    bricks           #c:bricks
+    ice              #c:ice snow_block snow
+    stairs           #minecraft:stairs
+    slab             #minecraft:slabs
+    wall             #minecraft:walls #minecraft:fences
+    redstone
+      redstoneDust   redstone #c:dusts/redstone
+      rail           #minecraft:rails
+      mechanism      piston sticky_piston observer dispenser dropper hopper lever repeater comparator daylight_detector target tripwire_hook #minecraft:buttons #minecraft:doors #minecraft:trapdoors crafter
+    decoration       #minecraft:signs #minecraft:hanging_signs #minecraft:banners #minecraft:skulls painting item_frame glow_item_frame armor_stand flower_pot decorated_pot
+    otherBlock       @block
+  misc
+    musicDisc        #c:music_discs
+    spawnEgg         @spawn_egg

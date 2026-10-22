@@ -1,0 +1,30 @@
+# Inventory Sortify - sorting rules for your inventory
+#
+# Press the sort key (R by default) or middle-click in your inventory to sort it with these rules.
+# Changes are picked up the next time you sort. Delete this file to get the default back.
+#
+# INVENTORY GRID (row D is the hotbar)
+#     1   2   3   4   5   6   7   8   9
+# A [A1][A2][A3][A4][A5][A6][A7][A8][A9]
+# B [B1][B2][B3][B4][B5][B6][B7][B8][B9]
+# C [C1][C2][C3][C4][C5][C6][C7][C8][C9]
+#
+# D [D1][D2][D3][D4][D5][D6][D7][D8][D9]
+#
+# RULES: "<slots> <keyword>"
+#   D1 sword          puts a sword in slot D1
+#   A food            fills row A with food (left to right; "Ar" right to left)
+#   9 torch           fills column 9 with torches (bottom to top; "9r" top to bottom)
+#   A1-C3 blocks      fills the rectangle row by row ("A1-C3v" column by column, add "r" to reverse)
+#   D LOCKED          sorting won't move items out of the hotbar (rules can still put items there)
+#   D9 FROZEN         sorting never touches slot D9
+#   AUTOREFILL tool   only auto-refill tools ("AUTOREFILL nothing" turns auto-refill off)
+#
+# KEYWORDS: anything from itemtree.txt (sword, pickaxe, food, blocks, ...), an item id like
+# minecraft:torch, or an item tag like #c:ingots. More precise rules win: a single slot beats a column,
+# a column beats a row, a row beats a rectangle; then a more specific keyword wins.
+#
+# SEVERAL RULE SETS: start a set with a line like "Mining:" and switch between sets with the
+# "Next sorting rule set" key (unbound by default, see Controls).
+
+D LOCKED
